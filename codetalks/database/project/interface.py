@@ -41,3 +41,16 @@ def AlterName(presHash, newName):
 		return True
 	except:
 		return False
+
+def DecRank(presHash):
+	pres = GetPres(presHash)
+	pres.presRank -= 1
+	pres.save()
+
+def IncRank(presHash):
+	pres = GetPres(presHash)
+	pres.presRank += 1
+	pres.save()
+
+def GetRank(presHash):
+	return GetPres(presHash).presRank

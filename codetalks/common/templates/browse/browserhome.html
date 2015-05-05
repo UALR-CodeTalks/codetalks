@@ -3,12 +3,32 @@
 {% block staticfiles %}
 	{% load staticfiles %}
 	<link rel = "stylesheet" href = "{% static 'css/browse.css' %}" type = "text/css"/>
+	<script src = "{% static 'javascript/editor/editor.js' %}" type = "text/javascript"></script>
+	<script type = "text/javascript">
+		function vote(hash, updown) {;
+            var message = "projecthash=" + hash + "&";
+			func = function(ajaxresponse) {
+				document.getElementById(hash).innerHTML = "Ranking " + ajaxresponse;
+			}
+            var headers = [["Content-Type","application/x-www-form-urlencoded"],["X-CSRFToken", "{{ csrf_token }}"]];
+            var url = "{% url 'editor:vote' %}"
+			if (updown === "1") {
+				message += "vote=1";
+			} else if (updown === "0") {
+				message += "vote=0";
+			}
+			SendAjaxRequest(func, true, url, headers, message);
+		}
+	</script>
 {% endblock %}
 
 {% block body %}
 	<div class = "projectsearch">
 		<form method = "GET" action = "{% url 'browser:index' %}">
 			<input type = "text" name = "filterstring"/>
+			<input type = "radio" name = "order" value = "asc" required /> Order by ascending rank.
+			<input type = "radio" name = "order" value = "desc" required /> Order by descending rank.
+			<input type = "radio" name = "order" value = "no" required /> No order.
 			<input type = "submit" name = "submit" value = "Search"/>
 		</form>
 	</div>
@@ -26,6 +46,15 @@
 						</br>
 						{{ project.presHash }}
 					</a>
+					<p id = "{{ project.presHash }}">
+						Ranking {{ project.presRank }}
+					</p>
+					<button onclick = "vote('{{ project.presHash }}', '0')">
+						Downvote
+					</button>
+					<button onclick = "vote('{{ project.presHash }}', '1')">
+						Upvote
+					</button>
 				</li>
 			{% endfor %}
 		</ul>

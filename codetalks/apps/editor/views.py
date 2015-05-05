@@ -32,3 +32,11 @@ def AlterName(request):
 	result = interface.AlterName(request.POST['projecthash'], request.POST['name'])
 	returnString = "The name was changed." if result is True else "An error occured."
 	return HttpResponse(returnString)
+
+def Vote(request):
+	change = request.POST['vote']
+	if change == '0':
+		interface.DecRank(request.POST['projecthash'])
+	elif change == '1':
+		interface.IncRank(request.POST['projecthash'])
+	return HttpResponse(interface.GetRank(request.POST['projecthash']))
