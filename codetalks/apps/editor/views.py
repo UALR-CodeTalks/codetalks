@@ -4,6 +4,23 @@ from django.core.urlresolvers import reverse
 from db.project import interface
 import json
 
+def Index(request):
+	try:
+		project = interface.GetProjectFromHash(request.GET['projecthash'])
+		if project is None:
+			raise TypeError
+		projectForkedObject = interface.GetForkFromHash(request.GET['projecthash'])
+		forkedParentHash = projectForkedObject.forkedParentHash if projectForkedObject is not None else ""
+		option = "Make Private" if project.projectPublic else "Make Public"
+		htmldata = {
+			'projectdata':project,
+			'parent':forkedParentHash,
+			'option':option
+		}
+		return render(request, 'editor/editor.html', htmldata)
+	except:
+		return HttpResponseRedirect(reverse("apps.home.home.Index"))
+
 def Load(request):
 	requestJson = json.loads(request.POST['data'])
 	presentation = interface.GetPres(requestJson['hash'])
@@ -11,23 +28,6 @@ def Load(request):
 		presentation = interface.NewPres()
 	returnJson = json.dumps({'hash':presentation.presHash, 'markdown':presentation.presMarkdown})
 	return HttpResponse(returnJson)
-
-# def Index(request):
-# 	try:
-# 		project = interface.GetProjectFromHash(request.GET['projecthash'])
-# 		if project is None:
-# 			raise TypeError
-# 		projectForkedObject = interface.GetForkFromHash(request.GET['projecthash'])
-# 		forkedParentHash = projectForkedObject.forkedParentHash if projectForkedObject is not None else ""
-# 		option = "Make Private" if project.projectPublic else "Make Public"
-# 		htmldata = {
-# 			'projectdata':project,
-# 			'parent':forkedParentHash,
-# 			'option':option
-# 		}
-# 		return render(request, 'editor/editorhome.html', htmldata)
-# 	except:
-# 		return HttpResponseRedirect(reverse("apps.home.home.Index"))
 #
 # def GetNewProject(request):
 # 	projectHash = interface.GenerateNewProject()
