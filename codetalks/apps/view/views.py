@@ -3,22 +3,11 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from database.project import interface
 
-# def Index(request):
-# 	try:
-# 		project = interface.GetProjectFromHash(request.GET['projecthash'])
-# 		if project is None:
-# 			raise TypeError
-# 		projectForkedObject = interface.GetForkFromHash(request.GET['projecthash'])
-# 		forkedParentHash = projectForkedObject.forkedParentHash if projectForkedObject is not None else ""
-# 		option = "Make Private" if project.projectPublic else "Make Public"
-# 		htmldata = {
-# 			'projectdata':project,
-# 			'parent':forkedParentHash,
-# 			'option':option
-# 		}
-# 		return render(request, 'editor/editorhome.html', htmldata)
-# 	except:
-# 		return HttpResponseRedirect(reverse("apps.home.home.Index"))
+def Index(request):
+	# try:
+	return render(request, 'view/index.html')
+	# except:
+	# 	return HttpResponseRedirect(reverse("apps.home.home.Index"))
 #
 # def GetNewProject(request):
 # 	projectHash = interface.GenerateNewProject()

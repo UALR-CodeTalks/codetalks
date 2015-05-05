@@ -6,4 +6,5 @@ urlpatterns = patterns('',
     url(r'^editor/', include('apps.editor.urls', namespace = 'editor')),
     url(r'^browser/', include('apps.browse.urls', namespace = 'browser')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^view/', include('apps.view.urls', namespace = 'view'))
 )
