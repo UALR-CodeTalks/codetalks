@@ -15,10 +15,7 @@
             var code = editor.getSession().getValue();
             code = encodeURIComponent(code);
             var message = "projecthash={{ pres.presHash }}&code=" + code;
-            func = function(ajaxresponse)
-            {
-                // AddToConsole(ajaxresponse);
-            }
+            func = function(ajaxresponse) {}
             var headers = [["Content-Type","application/x-www-form-urlencoded"],["X-CSRFToken", "{{ csrf_token }}"]];
             var url = "{% url 'editor:savecode' %}"
             SendAjaxRequest(func, true, url, headers, message);
@@ -62,6 +59,13 @@
                         <button type = "button" onclick = "SaveCode()" class = "controlbuttons">
                             Save
                         </button>
+                    </li>
+                    <li>
+                        <a href = "{% url 'view:index' %}?projecthash={{ pres.presHash }}" target = "_blank">
+                            <button type = "button" class = "controlbuttons">
+                                View presentation
+                            </button>
+                        </a>
                     </li>
                     <li>
                         <button type = "button" onclick = "ChangeProjectName()" class = "controlbuttons">
