@@ -2,40 +2,53 @@
     <head>
         {% load staticfiles %}
         <link rel = "stylesheet" href = "{% static 'css/home.css' %}" type = "text/css"/>
-        <script src = "{% static 'javascript/custom/util.js' %}" type = "text/javascript"></script>
-        <script type = "text/javascript">
-        function Load() {
-            var message = "data=" + JSON.stringify({'hash':''});
-            func = function(ajaxresponse) {
-                alert(ajaxresponse);
-            }
-            var headers = [["Content-Type","application/x-www-form-urlencoded"],["X-CSRFToken", "{{ csrf_token }}"]];
-            var url = "{% url 'editor:load' %}"
-            SendPostRequest(func, true, url, headers, message);
-        }
-
-        function Presentations() {
-            var message = "data=" + JSON.stringify({'filter':''})
-            func = function(ajaxresponse) {
-                alert(ajaxresponse);
-            }
-            var headers = [["Content-Type","application/x-www-form-urlencoded"],["X-CSRFToken", "{{ csrf_token }}"]];
-            var url = "{% url 'view:gethashes' %}"
-            SendPostRequest(func, true, url, headers, '');
-        }
-        </script>
+        {% block staticfiles %}
+        {% endblock %}
     </head>
-    <body onload = "Presentations()">
-        <div id = "buttons">
+    <body>
+        <div id = "navigationdiv">
             <ul>
                 <li>
-                    <button onclick = "Load()">
-                        New Presentation
-                    </button>
+                    <a href = "{% url 'apps.home.home.Index' %}">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href = "{% url 'editor:newproject' %}">
+                        Create New Project
+                    </a>
+                </li>
+                <li>
+                    <a href = "{% url 'browser:index' %}">
+                        Browse Open Source Projects
+                    </a>
                 </li>
             </ul>
         </div>
-        <div id = "presentations">
+        <div id = "mainbody">
+            {% block body %}
+                <div id = "home">
+                    <h3>
+                        Introduction
+                    </h3>
+                    <p>
+                        Hello and welcome to the codebin project! This website is an online
+                        Python 2.7 development enviroment.  This site is intended to be a resource
+                        for the quick development of small python scripts as well as larger projects.
+                        Don't expect any extreme performance because the Python is interpreted by
+                        a python interpreter known as Skulpt; which is written in Javascript!
+                    </p>
+                    <h3>
+                        Capabilities
+                    </h3>
+                    <p>
+                        This website has the capability to save your code, search for projects,
+                        rename projects, make projects public or private, and fork projects.
+                        You can keep track of projects by recording the permalinks or by searching
+                        for the projects with the built in search feature. 
+                    </p>
+                </div>
+            {% endblock %}
         </div>
     </body>
 </html>

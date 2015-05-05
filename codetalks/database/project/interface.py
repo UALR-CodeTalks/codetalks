@@ -1,4 +1,4 @@
-from db.project.models import Presentation
+from database.project.models import Presentation
 from common.helpers import hashtool
 import time
 
@@ -21,19 +21,22 @@ def GetPres(presHash):
 	except:
 		return None
 
-def GetPresFromHash(presHash = None):
-	if presHash is None:
-		return Presentation.objects.all()
-	else:
-		return Presentation.objects.get(presHash = presHash)
-
 def GetPresFromName(filterName = ''):
-	return Presentation.objects.filter(presName__in = filterName)
+	return Presentation.objects.filter(presName__icontains = filterName)
 
 def AlterMarkdown(presHash, newMarkdown):
 	try:
 		pres = GetPres(presHash)
 		pres.presMarkdown = newMarkdown
+		pres.save()
+		return True
+	except:
+		return False
+
+def AlterName(presHash, newName):
+	try:
+		pres = GetPres(presHash)
+		pres.presName = newName
 		pres.save()
 		return True
 	except:

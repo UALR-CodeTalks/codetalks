@@ -1,0 +1,33 @@
+{% extends "home/home.html" %}
+
+{% block staticfiles %}
+	{% load staticfiles %}
+	<link rel = "stylesheet" href = "{% static 'css/browse.css' %}" type = "text/css"/>
+{% endblock %}
+
+{% block body %}
+	<div class = "projectsearch">
+		<form method = "GET" action = "{% url 'browser:index' %}">
+			<input type = "text" name = "filterstring"/>
+			<input type = "submit" name = "submit" value = "Search"/>
+		</form>
+	</div>
+	<div class = "projects">
+		<ul>
+			{% for project in projects %}
+				<li>
+					<a href = "{% url 'editor:index' %}?projecthash={{ project.presHash }}" target = "_blank">
+						Edit {{ project.presName }}
+						</br>
+						{{ project.presHash }}
+					</a>
+					<a>
+						View {{ project.presName }}
+						</br>
+						{{ project.presHash }}
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}

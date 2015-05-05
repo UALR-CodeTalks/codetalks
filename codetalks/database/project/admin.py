@@ -1,4 +1,4 @@
 from django.contrib import admin
-from db.project.models import Presentation
+from database.project.models import Presentation
 
 admin.site.register(Presentation)
