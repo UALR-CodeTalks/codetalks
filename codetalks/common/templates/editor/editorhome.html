@@ -14,10 +14,10 @@
         {
             var code = editor.getSession().getValue();
             code = encodeURIComponent(code);
-            var message = "projecthash={{ projectdata.projectHash }}&code=" + code;
+            var message = "projecthash={{ pres.presHash }}&code=" + code;
             func = function(ajaxresponse)
             {
-                AddToConsole(ajaxresponse);
+                // AddToConsole(ajaxresponse);
             }
             var headers = [["Content-Type","application/x-www-form-urlencoded"],["X-CSRFToken", "{{ csrf_token }}"]];
             var url = "{% url 'editor:savecode' %}"

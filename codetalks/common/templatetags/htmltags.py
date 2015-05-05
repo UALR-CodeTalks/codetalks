@@ -8,6 +8,7 @@ def html_decode(value):
 	decodedString = decodedString.replace('"', '\\"')
 	decodedString = decodedString.replace("'", "\\'")
 	decodedString = decodedString.replace('\n','\\n')
+	decodedString = decodedString.replace('</script>', '<//script>')
 	return decodedString
 
 register.simple_tag(html_decode)

@@ -24,7 +24,7 @@ def GetNewProject(request):
 		return HttpResponseRedirect(reverse('apps.home.home.Index'))
 
 def SaveCode(request):
-	result = interface.SaveCode(request.POST['projecthash'], request.POST['code'])
+	result = interface.AlterMarkdown(request.POST['projecthash'], request.POST['code'].replace("<//script>", "</script>"))
 	returnString = "The code was saved." if result else "An error occured."
 	return HttpResponse(returnString)
 
