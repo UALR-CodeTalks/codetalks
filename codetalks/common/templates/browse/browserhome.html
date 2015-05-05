@@ -21,7 +21,7 @@
 						</br>
 						{{ project.presHash }}
 					</a>
-					<a>
+					<a href = "{% url 'view:index' %}?projecthash={{ project.presHash }}" target = "_blank">
 						View {{ project.presName }}
 						</br>
 						{{ project.presHash }}
