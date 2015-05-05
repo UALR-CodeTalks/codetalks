@@ -1,0 +1,60 @@
+from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
+from db.project import interface
+import json
+
+def Load(request):
+	requestJson = json.loads(request.POST['data'])
+	presentation = interface.GetPres(requestJson['hash'])
+	if presentation is None:
+		presentation = interface.NewPres()
+	returnJson = json.dumps({'hash':presentation.presHash, 'markdown':presentation.presMarkdown})
+	return HttpResponse(returnJson)
+
+# def Index(request):
+# 	try:
+# 		project = interface.GetProjectFromHash(request.GET['projecthash'])
+# 		if project is None:
+# 			raise TypeError
+# 		projectForkedObject = interface.GetForkFromHash(request.GET['projecthash'])
+# 		forkedParentHash = projectForkedObject.forkedParentHash if projectForkedObject is not None else ""
+# 		option = "Make Private" if project.projectPublic else "Make Public"
+# 		htmldata = {
+# 			'projectdata':project,
+# 			'parent':forkedParentHash,
+# 			'option':option
+# 		}
+# 		return render(request, 'editor/editorhome.html', htmldata)
+# 	except:
+# 		return HttpResponseRedirect(reverse("apps.home.home.Index"))
+#
+# def GetNewProject(request):
+# 	projectHash = interface.GenerateNewProject()
+# 	if projectHash is not None:
+# 		url = reverse('editor:index')
+# 		url += "?projecthash="
+# 		url += projectHash
+# 		return HttpResponseRedirect(url)
+# 	else:
+# 		return HttpResponseRedirect(reverse('apps.home.home.Index'))
+
+# def Fork(request):
+# 	result = interface.Fork(request.POST['projecthash'])
+# 	returnString = "The code was forked." if result else "An error occured."
+# 	return HttpResponse(returnString)
+#
+# def SaveCode(request):
+# 	result = interface.SaveCode(request.POST['projecthash'], request.POST['code'])
+# 	returnString = "The code was saved." if result else "An error occured."
+# 	return HttpResponse(returnString)
+#
+# def AlterPublicPrivate(request):
+# 	result = interface.AlterPublicPrivate(request.POST['projecthash'])
+# 	returnString = "Make Private" if result else "Make Public"
+# 	return HttpResponse(returnString)
+#
+# def AlterName(request):
+# 	result = interface.ChangeName(request.POST['projecthash'], request.POST['name'])
+# 	returnString = "The name was changed." if result is True else "An error occured."
+# 	return HttpResponse(returnString)
