@@ -3,6 +3,6 @@ from db.project import interface
 import json
 
 def GetHashes(request):
-	preses = GetPresFromHash()
+	preses = interface.GetPresFromHash()
 	hashes = [[pres.presHash, pres.presName] for pres in preses]
 	return HttpResponse(json.dumps({'hashes':hashes}))

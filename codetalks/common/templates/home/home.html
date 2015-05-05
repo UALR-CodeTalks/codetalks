@@ -14,8 +14,8 @@
             SendPostRequest(func, true, url, headers, message);
         }
 
-        function Presentations(filter = '') {
-            var message = "data=" + JSON.stringify({'filter':filter})
+        function Presentations() {
+            var message = "data=" + JSON.stringify({'filter':''})
             func = function(ajaxresponse) {
                 alert(ajaxresponse);
             }
@@ -25,7 +25,7 @@
         }
         </script>
     </head>
-    <body onload = "presentations()">
+    <body onload = "Presentations()">
         <div id = "buttons">
             <ul>
                 <li>
